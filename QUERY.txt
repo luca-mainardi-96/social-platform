@@ -1,27 +1,28 @@
-QUERY 1
+-QUERY 1
 
 SELECT DISTINCT `u`.`id` AS `user_id`, `u`.`username`
 FROM `users` AS `u`
 JOIN `medias` AS `m`
-ON `u`.`id`=`m`.`user_id`
+    ON `u`.`id`=`m`.`user_id`
 WHERE `m`.`type`= 'video'
 
-QUERY 2
+-QUERY 2
 
 SELECT `p`.*
 FROM `posts` AS `p`
 LEFT JOIN `likes` AS `l` 
-ON `p`.`id` = `l`.`post_id`
+    ON `p`.`id` = `l`.`post_id`
 WHERE `l`.`date` IS NULL;
 
-QUERY 3
+-QUERY 3
 
 SELECT `p`.`title`, COUNT(`l`.`post_id`) AS `like_number`
 FROM `posts` AS `p`
-LEFT JOIN `likes` AS `l` ON `l`.`post_id` = `p`.`id`
+LEFT JOIN `likes` AS `l` 
+    ON `l`.`post_id` = `p`.`id`
 GROUP BY `p`.`id`, `p`.`title`;
 
-QUERY 4
+-QUERY 4
 
 SELECT  `u`.`id` AS `user_id`, `u`.`username`, COUNT(`m`.`id`) AS `numero_media`
 FROM `users` AS `u`
@@ -34,5 +35,13 @@ JOIN `medias` AS `m`
 GROUP BY `u`.`id`, `u`.`username`
 ORDER BY `numero_media` DESC;
 
-QUERY 5
+-QUERY 5
 
+SELECT  `u`.`id` AS `user_id`, `u`.`username`, COUNT(`l`.`post_id`) AS `like_number`
+FROM `users` AS `u`
+JOIN `posts` AS `p` 
+	ON `u`.`id` = `p`.`user_id`
+JOIN `likes` AS `l` 
+	ON `u`.`id` = `l`.`user_id`
+GROUP BY `u`.`id`, `u`.`username`
+ORDER BY `like_number` DESC;
