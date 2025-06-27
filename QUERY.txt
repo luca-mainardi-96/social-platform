@@ -1,0 +1,7 @@
+QUERY 1
+
+SELECT DISTINCT `u`.`id` AS `user_id`, `u`.`username`
+FROM `users` AS `u`
+JOIN `medias` AS `m`
+ON `u`.`id`=`m`.`user_id`
+WHERE `m`.`type`= 'video'
