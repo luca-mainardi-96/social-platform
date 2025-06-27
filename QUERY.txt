@@ -5,3 +5,34 @@ FROM `users` AS `u`
 JOIN `medias` AS `m`
 ON `u`.`id`=`m`.`user_id`
 WHERE `m`.`type`= 'video'
+
+QUERY 2
+
+SELECT `p`.*
+FROM `posts` AS `p`
+LEFT JOIN `likes` AS `l` 
+ON `p`.`id` = `l`.`post_id`
+WHERE `l`.`date` IS NULL;
+
+QUERY 3
+
+SELECT `p`.`title`, COUNT(`l`.`post_id`) AS `like_number`
+FROM `posts` AS `p`
+LEFT JOIN `likes` AS `l` ON `l`.`post_id` = `p`.`id`
+GROUP BY `p`.`id`, `p`.`title`;
+
+QUERY 4
+
+SELECT  `u`.`id` AS `user_id`, `u`.`username`, COUNT(`m`.`id`) AS `numero_media`
+FROM `users` AS `u`
+JOIN `posts` AS `p` 
+	ON `u`.`id` = `p`.`user_id`
+JOIN `media_post` AS `mp` 
+	ON `p`.`id` = `mp`.`post_id`
+JOIN `medias` AS `m` 
+	ON `m`.`id` = `mp`.`media_id`
+GROUP BY `u`.`id`, `u`.`username`
+ORDER BY `numero_media` DESC;
+
+QUERY 5
+
